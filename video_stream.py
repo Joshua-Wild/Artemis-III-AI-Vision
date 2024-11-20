@@ -65,3 +65,26 @@ class VideoStream:
         if brect:
             color = (0, 255, 0) if training_mode else (255, 0, 0)
             cv2.rectangle(image, (brect[0], brect[1]), (brect[2], brect[3]), color, 1)
+
+    def display_training_status(self, image, training_mode, gesture_name):
+        # Set text based on the training mode status
+        training_text = "Training ON" if training_mode else "Training OFF"
+        gesture_text = f"Gesture: {gesture_name}"
+
+        # Define position and styling for text
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        font_scale = 0.6
+        font_color = (0, 0, 0) # Black color
+        font_thickness = 2
+
+        # Position for "Training ON/OFF" text
+        training_text_position = (10, image.shape[0] - 30)
+        # Position for "Gesture ID" text below "Training ON/OFF" text
+        gesture_text_position = (10, image.shape[0] - 10)
+
+        # Display the training mode text
+        cv2.putText(image, training_text, training_text_position, font, font_scale, font_color, font_thickness, cv2.LINE_AA)
+        # Display the gesture ID text
+        cv2.putText(image, gesture_text, gesture_text_position, font, font_scale, font_color, font_thickness, cv2.LINE_AA)
+
+    

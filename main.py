@@ -26,8 +26,10 @@ def main():
     # Initialize KeyPointClassifier
     keypoint_classifier = KeyPointClassifier()
 
+    
     # Main loop
     while True:
+
         img = video_stream.read()
         key = cv2.waitKey(10)
 
@@ -39,7 +41,9 @@ def main():
         # 't' toggles training mode
         if key == ord('t'): 
             training_mode = not training_mode
+        
 
+        
         # Process gestures at regular intervals
         current_time = time.time()
         if current_time - last_processed_time > PROCESSING_INTERVAL:
@@ -73,12 +77,13 @@ def main():
                         gesture_name = "Error"
 
                     # Display detected gesture on the video stream
-                    cv2.putText(img, f"Gesture: {gesture_name}", (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+                    #cv2.putText(img, f"Gesture: {gesture_name}", (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
+                    video_stream.display_training_status(img, training_mode, gesture_name) #AllYIA
                     # Control the drone based on predicted gesture
                     if drone_active:
                         drone_controller.control_with_gesture(gesture_name, current_time)
-
+                        
         # Display the image with annotations
         cv2.imshow('Drone Control', img)
 
